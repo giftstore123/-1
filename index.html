@@ -9,7 +9,6 @@
         :root {
             --space-blue: #00f2ff;
             --space-purple: #bc13fe;
-            --glow-color: rgba(0, 242, 255, 0.8);
         }
 
         body {
@@ -26,6 +25,7 @@
             font-family: 'Tajawal', sans-serif;
             overflow: hidden;
             touch-action: none;
+            color: white;
         }
 
         body::before {
@@ -47,21 +47,23 @@
             box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
             border: 1px solid rgba(0, 242, 255, 0.3);
             z-index: 10;
+            position: relative;
         }
 
-        /* تعديل: الصور كبيرة وليست دائرية */
+        /* الصور كبيرة ومربعة بزوايا ناعمة */
         .image-box {
-            width: 280px; /* حجم كبير */
-            height: 280px; /* حجم كبير */
-            border-radius: 25px; /* زوايا منحنية بسيطة */
+            width: 280px; 
+            height: 280px; 
+            border-radius: 25px;
             margin: 0 auto 25px auto;
             background-size: cover;
             background-position: center;
             border: 3px solid #fff;
-            box-shadow: 0 0 25px var(--space-blue); /* إشعاع قوي */
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 25px var(--space-blue);
+            transition: all 0.6s ease-in-out;
         }
 
+        /* كلاسات الصور */
         .img1 { background-image: url('img1.jpg'); }
         .img2 { background-image: url('img2.jpg'); }
         .img3 { background-image: url('img3.jpg'); }
@@ -92,9 +94,9 @@
             transition: 0.3s;
         }
 
-        .btn:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--space-blue); }
+        .btn:active { transform: scale(0.95); }
 
-        /* نظام النجوم */
+        /* النجوم المتطايرة */
         .star {
             position: absolute;
             pointer-events: none;
@@ -104,22 +106,22 @@
         }
 
         @keyframes starFade {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(180deg); opacity: 0; }
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
         }
 
-        .hidden { display: none; }
+        .hidden { display: none !important; }
 
-        .final-card {
-            background: rgba(10, 10, 30, 0.95);
-            padding: 40px 20px;
-            border-radius: 35px;
-            border: 2px solid var(--space-blue);
-            box-shadow: 0 0 50px var(--space-purple);
+        .final-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.9);
+            z-index: 100;
             text-align: center;
-            color: white;
-            width: 85%;
-            max-width: 350px;
         }
     </style>
 </head>
@@ -131,48 +133,23 @@
 
 <div class="container" id="main-container">
     <div id="image-frame" class="image-box img1"></div>
-    <div id="display-text"></div>
+    <div id="display-text">أهلاً أفلانة.. جاهزة؟ 🚀</div>
     <div id="btn-container">
-        <button class="btn" id="action-btn" onclick="nextStep()">أهلاً أفلانة.. 🚀</button>
+        <button class="btn" id="action-btn" onclick="nextStep()">نعم جاهزة ❤️</button>
     </div>
 </div>
 
-<div id="final-screen" class="hidden" style="position: fixed; inset:0; display:flex; justify-content:center; align-items:center; background:rgba(0,0,0,0.8); z-index:100;">
-    <div class="final-card">
-        <div class="image-box img6" style="width:220px; height:220px; border-radius: 20px;"></div>
-        <h2 style="color: var(--space-blue); margin-top:15px;">أحبكِ يا نجمتي ❤️</h2>
-        <p style="font-size: 1.1rem;">من أفلان.. إلى أبعد نقطة في الكون</p>
-        <button class="btn" style="margin-top:20px;" onclick="location.reload()">أحبك مجدداً 🔄</button>
-    </div>
+<div id="final-screen" class="final-screen hidden">
+    <div class="image-box img6" style="width:220px; height:220px;"></div>
+    <h2 style="color: var(--space-blue); margin-top:15px;">أحبكِ يا نجمتي ❤️</h2>
+    <p style="font-size: 1.2rem;">من أفلان.. إلى أبعد مجرة في الكون</p>
+    <button class="btn" onclick="location.reload()">أحبك مجدداً 🔄</button>
 </div>
 
 <script>
     const player = document.getElementById('player');
-    
-    function playMusic() {
-        player.play().catch(() => {});
-    }
-
-    function createStars(x, y) {
-        for (let i = 0; i < 10; i++) {
-            const s = document.createElement('div');
-            s.innerHTML = i % 2 === 0 ? '✨' : '🌟';
-            s.className = 'star';
-            s.style.left = x + 'px';
-            s.style.top = y + 'px';
-            const tx = (Math.random() - 0.5) * 400;
-            const ty = (Math.random() - 0.5) * 400;
-            s.style.setProperty('--tx', `${tx}px`);
-            s.style.setProperty('--ty', `${ty}px`);
-            document.body.appendChild(s);
-            setTimeout(() => s.remove(), 1300);
-        }
-    }
-
-    document.addEventListener('mousedown', (e) => { createStars(e.clientX, e.clientY); playMusic(); });
-    document.addEventListener('touchstart', (e) => { createStars(e.touches[0].clientX, e.touches[0].clientY); playMusic(); });
-
     let step = 0;
+
     const content = [
         { t: "أفلانة.. تدرين إن السماء الليلة طالعة كلش حلوة؟", i: "img1", b: "ليش يا أفلان؟" },
         { t: "لأنها تحاول تقلد لمعة عيونج، بس طبعاً ما تگدر!", i: "img2", b: "يا روحي 🤭" },
@@ -182,41 +159,64 @@
         { t: "تعالي نسافر بين النجوم على هذا اللحن..", i: "img6", b: "يلا 🎵" }
     ];
 
-    function typeEffect(text, callback) {
-        let i = 0;
-        const el = document.getElementById('display-text');
-        el.innerHTML = "";
-        function type() {
-            if (i < text.length) {
-                el.innerHTML += text.charAt(i);
-                i++; setTimeout(type, 60);
-            } else if (callback) callback();
-        }
-        type();
-    }
-
     function nextStep() {
-        playMusic();
+        // تشغيل الموسيقى عند أول ضغطة
+        player.play().catch(() => {});
+
         if (step >= content.length) {
             document.getElementById('main-container').classList.add('hidden');
             document.getElementById('final-screen').classList.remove('hidden');
             return;
         }
+
         const data = content[step];
-        const btn = document.getElementById('action-btn');
-        btn.style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('image-frame').className = "image-box " + data.i;
-            typeEffect(data.t, () => {
-                btn.innerText = data.b;
-                btn.style.opacity = '1';
-            });
-        }, 300);
+        const textEl = document.getElementById('display-text');
+        const imgEl = document.getElementById('image-frame');
+        const btnEl = document.getElementById('action-btn');
+
+        // تغيير الصورة
+        imgEl.className = "image-box " + data.i;
+        
+        // تأثير الكتابة
+        let i = 0;
+        textEl.innerHTML = "";
+        btnEl.style.display = "none"; // إخفاء الزر أثناء الكتابة
+        
+        function type() {
+            if (i < data.t.length) {
+                textEl.innerHTML += data.t.charAt(i);
+                i++;
+                setTimeout(type, 50);
+            } else {
+                btnEl.style.display = "inline-block";
+                btnEl.innerText = data.b;
+            }
+        }
+        type();
         step++;
     }
 
-    window.onload = () => { setTimeout(nextStep, 500); };
+    // نظام النجوم المتطايرة عند اللمس
+    function createStars(x, y) {
+        for (let i = 0; i < 8; i++) {
+            const s = document.createElement('div');
+            s.innerHTML = '✨';
+            s.className = 'star';
+            s.style.left = x + 'px';
+            s.style.top = y + 'px';
+            s.style.color = '#fffb00';
+            const tx = (Math.random() - 0.5) * 400 + 'px';
+            const ty = (Math.random() - 0.5) * 400 + 'px';
+            s.style.setProperty('--tx', tx);
+            s.style.setProperty('--ty', ty);
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 1300);
+        }
+    }
+
+    document.addEventListener('mousedown', (e) => createStars(e.clientX, e.clientY));
+    document.addEventListener('touchstart', (e) => createStars(e.touches[0].clientX, e.touches[0].clientY));
+
 </script>
 </body>
 </html>
-
