@@ -12,55 +12,25 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('space_bg.jpg'); 
-            background-color: #020205;
-            background-size: cover;
-            background-position: center;
-            font-family: 'Tajawal', sans-serif;
-            overflow: hidden;
-            touch-action: none;
-            color: white;
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
+            height: 100vh; background-image: url('space_bg.jpg'); background-color: #020205;
+            background-size: cover; background-position: center; font-family: 'Tajawal', sans-serif;
+            overflow: hidden; touch-action: none; color: white;
         }
 
-        body::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7); 
-            z-index: -1;
-        }
+        body::before { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: -1; }
 
         .container {
-            text-align: center;
-            background: rgba(15, 15, 35, 0.85);
-            backdrop-filter: blur(15px);
-            padding: 30px 20px;
-            border-radius: 35px;
-            width: 85%;
-            max-width: 400px;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            z-index: 10;
-            position: relative;
+            text-align: center; background: rgba(15, 15, 35, 0.85); backdrop-filter: blur(15px);
+            padding: 30px 20px; border-radius: 35px; width: 85%; max-width: 400px;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4); border: 1px solid rgba(0, 242, 255, 0.3);
+            z-index: 10; position: relative;
         }
 
-        /* الصور كبيرة ومربعة بزوايا ناعمة */
         .image-box {
-            width: 280px; 
-            height: 280px; 
-            border-radius: 25px;
-            margin: 0 auto 25px auto;
-            background-size: cover;
-            background-position: center;
-            border: 3px solid #fff;
-            box-shadow: 0 0 25px var(--space-blue);
-            transition: all 0.6s ease-in-out;
+            width: 280px; height: 280px; border-radius: 25px; margin: 0 auto 25px auto;
+            background-size: cover; background-position: center; border: 3px solid #fff;
+            box-shadow: 0 0 25px var(--space-blue); transition: all 0.6s ease-in-out;
         }
 
         /* كلاسات الصور */
@@ -71,58 +41,23 @@
         .img5 { background-image: url('img5.jpg'); }
         .img6 { background-image: url('img6.jpg'); }
 
-        #display-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 25px;
-            min-height: 4.5rem;
-            text-shadow: 0 0 10px var(--space-blue);
-            line-height: 1.6;
-        }
+        #display-text { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 25px; min-height: 4.5rem; text-shadow: 0 0 10px var(--space-blue); line-height: 1.6; }
 
         .btn {
             background: linear-gradient(45deg, var(--space-purple), var(--space-blue));
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--space-purple);
-            transition: 0.3s;
+            color: white; border: none; padding: 12px 30px; font-size: 1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 0 15px var(--space-purple); transition: 0.3s;
         }
 
-        .btn:active { transform: scale(0.95); }
+        /* تنسيق التاريخ المشع */
+        .date-display { font-size: 2rem; color: var(--space-blue); text-shadow: 0 0 20px var(--space-blue); font-weight: bold; display: block; margin-top: 10px; }
 
-        /* النجوم المتطايرة */
-        .star {
-            position: absolute;
-            pointer-events: none;
-            font-size: 22px;
-            z-index: 9999;
-            animation: starFade 1.3s ease-out forwards;
-        }
-
-        @keyframes starFade {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
-        }
+        .star { position: absolute; pointer-events: none; font-size: 22px; z-index: 9999; animation: starFade 1.3s ease-out forwards; }
+        @keyframes starFade { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
 
         .hidden { display: none !important; }
 
-        .final-screen {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0,0,0,0.9);
-            z-index: 100;
-            text-align: center;
-        }
+        .final-screen { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.9); z-index: 100; text-align: center; }
     </style>
 </head>
 <body>
@@ -142,8 +77,8 @@
 <div id="final-screen" class="final-screen hidden">
     <div class="image-box img6" style="width:220px; height:220px;"></div>
     <h2 style="color: var(--space-blue); margin-top:15px;">أحبكِ يا نجمتي ❤️</h2>
-    <p style="font-size: 1.2rem;">من أفلان.. إلى أبعد مجرة في الكون</p>
-    <button class="btn" onclick="location.reload()">أحبك مجدداً 🔄</button>
+    <p style="font-size: 1.2rem;">من أفلان.. للأبد</p>
+    <button class="btn" onclick="location.reload()">إعادة الرحلة 🔄</button>
 </div>
 
 <script>
@@ -152,15 +87,21 @@
 
     const content = [
         { t: "أفلانة.. تدرين إن السماء الليلة طالعة كلش حلوة؟", i: "img1", b: "ليش يا أفلان؟" },
-        { t: "لأنها تحاول تقلد لمعة عيونج، بس طبعاً ما تگدر!", i: "img2", b: "يا روحي 🤭" },
-        { t: "أنتِ مو مجرد شخص عادي.. أنتِ كوكبي اللي يضوي دنياي", i: "img3", b: "وأنت سندي ❤️" },
+        { t: "لأنها تحاول تقلد لمعة عيونج، بس طبعاً ما تگدر!", i: "img2", b:"كيوتيي 🤭" },
+        { t: "أنتِ مو مجرد شخص عادي.. أنتِ كوكبي اللي يضوي دنياي", i: "img3", b: "يفداكك ❤️" },
         { t: "لو خيروني بين كل نجوم المجرة وبينج أنتِ..", i: "img4", b: "شنو تختار؟" },
-        { t: "راح أختار أفلانة وأعوف الكون كله بظلامه!", i: "img5", b: "أحبك أفلان" },
+        { t: "راح أختار أفلانة وأعوف الكون كله بظلامه!", i: "img5", b: "أحبككك" },
+        // الخطوة الجديدة التي طلبتها
+        { 
+            t: "تذكرين اليوم اللي صار بي كوننا واحد؟", 
+            i: "img3", 
+            b: "تاريخ تعارفناا انيي ونجميي الساطع افلانة",
+            isDateStep: true 
+        },
         { t: "تعالي نسافر بين النجوم على هذا اللحن..", i: "img6", b: "يلا 🎵" }
     ];
 
     function nextStep() {
-        // تشغيل الموسيقى عند أول ضغطة
         player.play().catch(() => {});
 
         if (step >= content.length) {
@@ -174,13 +115,11 @@
         const imgEl = document.getElementById('image-frame');
         const btnEl = document.getElementById('action-btn');
 
-        // تغيير الصورة
         imgEl.className = "image-box " + data.i;
         
-        // تأثير الكتابة
         let i = 0;
         textEl.innerHTML = "";
-        btnEl.style.display = "none"; // إخفاء الزر أثناء الكتابة
+        btnEl.style.display = "none";
         
         function type() {
             if (i < data.t.length) {
@@ -190,25 +129,25 @@
             } else {
                 btnEl.style.display = "inline-block";
                 btnEl.innerText = data.b;
+                
+                // إذا كانت خطوة التاريخ، نظهر التاريخ تحت النص
+                if(data.isDateStep) {
+                    textEl.innerHTML += '<br><span class="date-display">2023 / 5 / 10</span>'; // غير التاريخ هنا
+                }
             }
         }
         type();
         step++;
     }
 
-    // نظام النجوم المتطايرة عند اللمس
     function createStars(x, y) {
         for (let i = 0; i < 8; i++) {
             const s = document.createElement('div');
-            s.innerHTML = '✨';
-            s.className = 'star';
-            s.style.left = x + 'px';
-            s.style.top = y + 'px';
-            s.style.color = '#fffb00';
+            s.innerHTML = '✨'; s.className = 'star';
+            s.style.left = x + 'px'; s.style.top = y + 'px';
             const tx = (Math.random() - 0.5) * 400 + 'px';
             const ty = (Math.random() - 0.5) * 400 + 'px';
-            s.style.setProperty('--tx', tx);
-            s.style.setProperty('--ty', ty);
+            s.style.setProperty('--tx', tx); s.style.setProperty('--ty', ty);
             document.body.appendChild(s);
             setTimeout(() => s.remove(), 1300);
         }
@@ -216,7 +155,6 @@
 
     document.addEventListener('mousedown', (e) => createStars(e.clientX, e.clientY));
     document.addEventListener('touchstart', (e) => createStars(e.touches[0].clientX, e.touches[0].clientY));
-
 </script>
 </body>
 </html>
