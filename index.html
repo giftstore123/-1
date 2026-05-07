@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة عبر النجوم ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: #00f2ff; /* أزرق سماوي مشع */
+            --secondary-glow: #bc13fe; /* بنفسجي مشع */
+            --text-color: #e0e0e0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('space_bg.jpg'); /* ضع خلفية للفضاء هنا */
+            background-color: #050505; /* لون احتياطي */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Tajawal', sans-serif;
+            overflow: hidden;
+            color: var(--text-color);
+            touch-action: none; 
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* تعتيم قوي لزيادة تأثير الغموض */
+            z-index: -1;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(10, 10, 25, 0.8); /* خلفية داكنة شفافة */
+            backdrop-filter: blur(15px);
+            padding: 40px 20px;
+            border-radius: 40px;
+            width: 85%;
+            max-width: 400px;
+            box-shadow: 0 0 25px var(--primary-glow);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+
+        .image-box {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%; /* جعل الصور دائرية لتشبه الكواكب */
+            margin: 0 auto 25px auto;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--primary-glow);
+            box-shadow: 0 0 30px var(--primary-glow), inset 0 0 20px var(--primary-glow);
+            transition: all 0.6s ease-in-out;
+        }
+
+        /* كلاسات الصور (تأكد من وجود هذه الملفات في GitHub) */
+        .img1 { background-image: url('img1.jpg'); }
+        .img2 { background-image: url('img2.jpg'); }
+        .img3 { background-image: url('img3.jpg'); }
+        .img4 { background-image: url('img4.jpg'); }
+        .img5 { background-image: url('img5.jpg'); }
+        .img6 { background-image: url('img6.jpg'); }
+
+        #display-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            height: 3.5rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--secondary-glow), var(--primary-glow));
+            color: white;
+            border: none;
+            padding: 14px 45px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--secondary-glow);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        /* نظام النجوم المتطايرة */
+        .star-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 20px;
+            animation: starFade 1.5s ease-out forwards;
+        }
+
+        @keyframes starFade {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        .final-screen {
+            position: fixed; inset: 0; display: flex; justify-content: center; align-items: center;
+            z-index: 100; background-color: #000;
+        }
+
+        .player-card {
+            background: rgba(20, 20, 40, 0.95);
+            padding: 30px; border-radius: 35px; width: 300px; text-align: center;
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 0 40px var(--secondary-glow);
+        }
+
+        .progress-bar { width: 0%; height: 100%; background: var(--primary-glow); box-shadow: 0 0 10px var(--primary-glow); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<audio id="player" loop>
+    <source src="space_song.mp3" type="audio/mpeg"> </audio>
+
+<div class="container" id="main-container">
+    <div id="image-frame" class="image-box img1"></div>
+    <div id="display-text"></div>
+    <div id="btn-container">
+        <button class="btn" id="action-btn" onclick="nextStep()">بدء الرحلة 🚀</button>
+    </div>
+</div>
+
+<div id="final-screen" class="final-screen hidden">
+    <div class="player-card">
+        <div class="image-box img6" style="width: 180px; height: 180px;"></div>
+        <h2 style="color: var(--primary-glow);">رسالة من المجرة 🎵</h2>
+        <p style="color: #bbb;">أنتِ نجمتي المفضلة ❤️</p>
+        <div class="audio-controls">
+            <button class="btn" style="padding: 10px 20px;" onclick="togglePlay()">⏸️ تشغيل/إيقاف</button>
+            <div style="width: 100%; height: 5px; background: #333; margin-top: 15px; border-radius: 5px; overflow: hidden;">
+                <div class="progress-bar" id="progress"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const player = document.getElementById('player');
+    
+    function startMusic() {
+        player.play().catch(() => console.log("بانتظار التفاعل.."));
+    }
+
+    // انفجار النجوم بدلاً من القلوب
+    function createStarBurst(x, y) {
+        for (let i = 0; i < 12; i++) {
+            const star = document.createElement('div');
+            star.innerHTML = '⭐'; // يمكنك تغييرها إلى ✨ أو 🌟
+            star.className = 'star-particle';
+            star.style.left = x + 'px';
+            star.style.top = y + 'px';
+            star.style.color = Math.random() > 0.5 ? '#fffb00' : '#00f2ff';
+            
+            const tx = (Math.random() - 0.5) * 500;
+            const ty = (Math.random() - 0.5) * 500;
+            star.style.setProperty('--tx', `${tx}px`);
+            star.style.setProperty('--ty', `${ty}px`);
+            
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 1500);
+        }
+    }
+
+    document.addEventListener('mousedown', (e) => { createStarBurst(e.clientX, e.clientY); startMusic(); });
+    document.addEventListener('touchstart', (e) => { createStarBurst(e.touches[0].clientX, e.touches[0].clientY); startMusic(); });
+
+    let currentStep = 0;
+    const content = [
+        { text: "مرحباً بكِ في مجرتي الخاصة", class: "img1", btn: "دخول" },
+        { text: "هل كنتِ تعلمين أنكِ أجمل نجمة؟", class: "img2", btn: "حقاً؟" },
+        { text: "لقد بحثت في كل الكواكب..", class: "img3", btn: "وماذا وجدت؟" },
+        { text: "ولم أجد أحداً بجمال قلبك", class: "img4", btn: "🤭" },
+        { text: "هل تقبلين البقاء في مداري؟", class: "img5", btn: "نعم" },
+        { text: "إليكِ لحن من الفضاء..", class: "img6", btn: "استماع 🎵" }
+    ];
+
+    function typeEffect(text, callback) {
+        let i = 0;
+        document.getElementById('display-text').innerHTML = "";
+        function type() {
+            if (i < text.length) {
+                document.getElementById('display-text').innerHTML += text.charAt(i);
+                i++; setTimeout(type, 60);
+            } else if (callback) callback();
+        }
+        type();
+    }
+
+    function nextStep() {
+        startMusic();
+        if (currentStep >= content.length) {
+            document.getElementById('main-container').classList.add('hidden');
+            document.getElementById('final-screen').classList.remove('hidden');
+            return;
+        }
+        const data = content[currentStep];
+        const btn = document.getElementById('action-btn');
+        btn.style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('image-frame').className = "image-box " + data.class;
+            typeEffect(data.text, () => {
+                btn.style.opacity = '1';
+                btn.innerText = data.btn;
+            });
+        }, 300);
+        currentStep++;
+    }
+
+    function togglePlay() {
+        player.paused ? player.play() : player.pause();
+    }
+
+    player.ontimeupdate = () => {
+        document.getElementById('progress').style.width = (player.currentTime / player.duration) * 100 + "%";
+    };
+
+    window.onload = () => { setTimeout(nextStep, 500); };
+</script>
+</body>
+</html>
